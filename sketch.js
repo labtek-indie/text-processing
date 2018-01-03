@@ -20,14 +20,11 @@ function initPageElement(){
 	changeNounButton = createButton("Change with Random Noun");
 	changeNounButton.class('buttons');
 	changeNounButton.parent('buttons-holder');
-	// changeNounButton.style("padding", "10px");
-	// changeNounButton.style("margin", "5px");
+
 	similarRhymeButton = createButton('Find Noun\'s Similar Rhyme');
 	similarRhymeButton.parent('buttons-holder');
 	similarRhymeButton.class('buttons');
-	// similarRhymeButton.style("padding", "10px");
-	// similarRhymeButton.style("margin", "5px");
-
+	
 	changeNounButton.mousePressed(changeNoun);
 	similarRhymeButton.mousePressed(rhymeTest);
 }
