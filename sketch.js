@@ -3,6 +3,7 @@ var changeNounButton;
 var similarRhymeButton;
 var lex; // lexicon string
 var ritaAnalyzer;
+var inputString = 'Mary has a little lamb';
 
 function setup() {
 	noCanvas();
@@ -13,7 +14,7 @@ function setup() {
 }
 
 function initPageElement(){
-	inputSentence = createInput('Mary has a little lamb');
+	inputSentence = createInput(inputString);
 	inputSentence.size(300);
 	inputSentence.parent('sketch-holder');
 
@@ -24,14 +25,14 @@ function initPageElement(){
 	similarRhymeButton = createButton('Find Noun\'s Similar Rhyme');
 	similarRhymeButton.parent('buttons-holder');
 	similarRhymeButton.class('buttons');
-	
+
 	changeNounButton.mousePressed(changeNoun);
-	similarRhymeButton.mousePressed(rhymeTest);
+	similarRhymeButton.mousePressed(similarRhyme);
 }
 
 function changeNoun(){
-	var s = inputSentence.value();
-	var rs = new RiString(s);
+	inputString = inputSentence.value();
+	var rs = new RiString(inputString);
 	var words = rs.words(rs);
 	var pos = rs.pos();
 
@@ -51,9 +52,9 @@ function changeNoun(){
 	createP(output);
 }
 
-function rhymeTest(){
-	var s = inputSentence.value();
-	var rs = new RiString(s);
+function similarRhyme(){
+	inputString = inputSentence.value();
+	var rs = new RiString(inputString);
 	var words = rs.words(rs);
 	var pos = rs.pos();
 
@@ -62,7 +63,7 @@ function rhymeTest(){
 		if (pos[i] === 'nn'){
 			var rhyme = RiTa.rhymes(words[i]);
 			output += random(rhyme);
-
+			output +=" ";
 		} else {
 			output += words[i];
 			output += " ";
