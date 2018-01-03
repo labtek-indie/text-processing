@@ -1,59 +1,71 @@
 var inputSentence;
-var button;
+var changeNounButton;
+var similarRhymeButton;
 var lex; // lexicon string
+var ritaAnalyzer;
 
 function setup() {
 	noCanvas();
 	lex = new RiLexicon();
 
-	inputSentence = createInput('I am not a crook');
+	initPageElement();
+
+}
+
+function initPageElement(){
+	inputSentence = createInput('Mary has a little lamb');
 	inputSentence.size(300);
-	button = createButton('Submit');
+	inputSentence.parent('sketch-holder');
 
-	inputSentence.changed(RiTaAnalyze);
-	button.mousePressed(RiTaAnalyze);
+	changeNounButton = createButton("Change with Random Noun");
+	changeNounButton.class('buttons');
+	changeNounButton.parent('buttons-holder');
+	// changeNounButton.style("padding", "10px");
+	// changeNounButton.style("margin", "5px");
+	similarRhymeButton = createButton('Find Noun\'s Similar Rhyme');
+	similarRhymeButton.parent('buttons-holder');
+	similarRhymeButton.class('buttons');
+	// similarRhymeButton.style("padding", "10px");
+	// similarRhymeButton.style("margin", "5px");
 
-	// inputSentence.changed(NLPAnalyze);
-	// button.mousePressed(NLPAnalyze);
-
-	// var doc = window.nlp('one-million two-thousand five-hundred and sixty-five point two');
-  //
-  // doc.values().toNumber();
-  // document.body.innerHTML = doc.out('text');
-
+	changeNounButton.mousePressed(changeNoun);
+	similarRhymeButton.mousePressed(rhymeTest);
 }
 
-function NLPAnalyze(){
-	var s = inputSentence.value();
-	var nlp_sentence = nlp(s).sentences(); // also could be nlp_sentence = nlp(s)
-	var s_length = nlp_sentence.list[0].terms.length;
-
-	console.log(s_length);
-	// create output string model
-	// var out = '';
-	// for (var i = 0; i < s_length; i++) {
-  //
-	// }
-
-	createP(out);
-
-	// var plural = nlp_sentence.nouns().toPlural().out('text');
-  //
-
-}
-
-function RiTaAnalyze(){
+function changeNoun(){
 	var s = inputSentence.value();
 	var rs = new RiString(s);
-	// rs.analyze();
 	var words = rs.words(rs);
 	var pos = rs.pos();
-	// console.log(words);
 
 	var output = '';
 	for (var i = 0; i < words.length; i++) {
 		if (pos[i] === 'nn'){
 			output += lex.randomWord('nn');
+			if (!(i === words.length-1)){
+				output += " ";
+			}
+
+		} else {
+			output += words[i];
+			output += " ";
+		}
+	}
+	createP(output);
+}
+
+function rhymeTest(){
+	var s = inputSentence.value();
+	var rs = new RiString(s);
+	var words = rs.words(rs);
+	var pos = rs.pos();
+
+	var output = '';
+	for (var i = 0; i < words.length; i++) {
+		if (pos[i] === 'nn'){
+			var rhyme = RiTa.rhymes(words[i]);
+			output += random(rhyme);
+
 		} else {
 			output += words[i];
 			output += " ";
