@@ -1,13 +1,21 @@
 var inputSentence;
 var changeNounButton;
 var similarRhymeButton;
+var nlpButton;
 var lex; // lexicon string
 var ritaAnalyzer;
 var inputString = 'Mary has a little lamb';
+var dropdownString;
+var rawText1, rawText2, rawText3, raw4;
 
 function setup() {
 	noCanvas();
 	lex = new RiLexicon();
+
+	rawText1 = loadStrings("data/Bon Jovi Always.txt")
+	rawText2 = loadStrings("data/State of Union 05.txt")
+	rawText3 = loadStrings("data/Weezer Lyrics.txt")
+	rawText4 = loadStrings("data/Friends Episode Transcript.txt")
 
 	initPageElement();
 
@@ -26,8 +34,13 @@ function initPageElement(){
 	similarRhymeButton.parent('buttons-holder');
 	similarRhymeButton.class('buttons');
 
+	nlpButton = createButton('NLP Analyze');
+	nlpButton.parent('buttons-holder');
+	nlpButton.class('buttons');
+
 	changeNounButton.mousePressed(changeNoun);
 	similarRhymeButton.mousePressed(similarRhyme);
+	nlpButton.mousePressed(nlpTest);
 }
 
 function changeNoun(){
@@ -70,4 +83,16 @@ function similarRhyme(){
 		}
 	}
 	createP(output);
+}
+
+function nlpTest(){
+	inputString = inputSentence.value();
+	var nlpString = nlp(rawText);
+
+	var people = nlpString.people().out('text');
+	var topics = nlpString.topics().out('frequency');
+	console.log(topics);
+	var verbs = nlpString.verbs().slice(0,50).out('frequency')
+
+	var output = topics;
 }
