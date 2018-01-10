@@ -34,13 +34,13 @@ function initPageElement(){
 	similarRhymeButton.parent('buttons-holder');
 	similarRhymeButton.class('buttons');
 
-	nlpButton = createButton('NLP Analyze');
-	nlpButton.parent('buttons-holder');
-	nlpButton.class('buttons');
+// 	nlpButton = createButton('NLP Analyze');
+// 	nlpButton.parent('buttons-holder');
+// 	nlpButton.class('buttons');
 
 	changeNounButton.mousePressed(changeNoun);
 	similarRhymeButton.mousePressed(similarRhyme);
-	nlpButton.mousePressed(nlpTest);
+// 	nlpButton.mousePressed(nlpTest);
 }
 
 function changeNoun(){
